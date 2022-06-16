@@ -20,30 +20,18 @@ Currently included is:
 
 ## Usage
 
-Here is an example usage in a nextjs API handler.
+Here is an example usage of the ABI and ERC721 contract type.
 
 ```typescript
 import { ERC721, ERC721ABI } from '@abimate/solmate';
 import { ethers } from 'ethers';
-import type { NextApiRequest, NextApiResponse } from 'next';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const provider = new ethers.providers.JsonRpcProvider(
-    'https://eth-mainnet.alchemyapi.io/v2/{ALCHEMY_KEY}'
-  );
-
-  const collection = new ethers.Contract(
+const collection = new ethers.Contract(
     '0x23581767a106ae21c074b2276d25e5c3e136a68b',
     ERC721ABI,
     provider
   ) as ERC721;
-
-  const name = await collection.callStatic.name();
-
-  res.status(200).json({ name });
-};
-
-export default handler;
+const name = await collection.callStatic.name();
 ```
 
 ## Building
