@@ -29,7 +29,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const provider = new ethers.providers.JsonRpcProvider(
-    'https://eth-mainnet.alchemyapi.io/v2/MN7lukHGqJaLMNZWeQfhkexSKwssvNZq'
+    'https://eth-mainnet.alchemyapi.io/v2/{ALCHEMY_KEY}'
   );
 
   const collection = new ethers.Contract(
@@ -37,11 +37,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     ERC721ABI,
     provider
   ) as ERC721;
-  console.log('hello');
 
   const name = await collection.callStatic.name();
 
-  console.log({ name });
   res.status(200).json({ name });
 };
 
