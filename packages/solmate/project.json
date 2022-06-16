@@ -1,0 +1,95 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/solmate/src",
+  "projectType": "library",
+  "targets": {
+    "install": {
+      "executor": "nx:run-commands",
+      "outputs": ["packages/solmate/lib/lib"],
+      "options": {
+        "cwd": "packages/solmate/lib",
+        "commands": [
+          {
+            "command": "forge install"
+          }
+        ]
+      }
+    },
+    "build-forge": {
+      "executor": "nx:run-commands",
+      "outputs": ["packages/solmate/lib/out"],
+      "options": {
+        "cwd": "packages/solmate/lib",
+        "commands": [
+          {
+            "command": "forge install"
+          }
+        ]
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "install"
+        }
+      ]
+    },
+    "build-typescript": {
+      "executor": "nx:run-commands",
+      "outputs": ["packages/solmate/types"],
+      "options": {
+        "cwd": "packages/solmate",
+        "commands": [
+          {
+            "command": "typechain --target=ethers-v5 'lib/out/*/**.json'"
+          }
+        ]
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build-forge"
+        }
+      ]
+    },
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/solmate",
+        "main": "packages/solmate/src/index.ts",
+        "tsConfig": "packages/solmate/tsconfig.lib.json",
+        "assets": ["packages/solmate/*.md"]
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build-forge"
+        },
+        {
+          "projects": "self",
+          "target": "build-typescript"
+        }
+      ]
+    },
+    "publish": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.mjs solmate {args.ver} {args.tag}"
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build"
+        }
+      ]
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/openzepplin/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}
