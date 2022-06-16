@@ -1,11 +1,3 @@
-# solmate
+# @abimate/solmate
 
-This library was generated with [Nx](https://nx.dev).
-
-## Building
-
-Run `nx build solmate` to build the library.
-
-## Running unit tests
-
-Run `nx test solmate` to execute the unit tests via [Jest](https://jestjs.io).
+This package is part of the `@abimate` monorepository - https://github.com/peetzweg/abimate.

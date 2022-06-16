@@ -1,5 +1,6 @@
 {
   "name": "@abimate/solmate",
   "version": "0.0.1",
-  "type": "commonjs"
+  "type": "commonjs",
+  "homepage": "https://github.com/peetzweg/abimate"
 }
