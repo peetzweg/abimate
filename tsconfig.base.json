@@ -16,6 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@abimate/openzeppelin": ["packages/openzeppelin/src/index.ts"],
       "@abimate/solmate": ["packages/solmate/src/index.ts"]
     }
   },

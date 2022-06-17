@@ -8,6 +8,7 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@nomiclabs/hardhat-truffle5": "^2.0.6",
     "@nrwl/cli": "14.3.5",
     "@nrwl/eslint-plugin-nx": "14.3.5",
     "@nrwl/jest": "14.3.5",
@@ -21,6 +22,7 @@
     "@typescript-eslint/parser": "~5.24.0",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
+    "hardhat": "^2.9.9",
     "jest": "27.5.1",
     "nx": "14.3.5",
     "prettier": "^2.6.2",
