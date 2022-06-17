@@ -47,3 +47,13 @@ Commands to run a build:
 `npm install`
 
 `nx build solmate`
+
+## Acknowledgements
+
+Code in this repository is directly referencing:
+
+- [solmate](https://github.com/Rari-Capital/solmate)
+
+## Licensing
+
+Licensing of the original source code applies. See individual licenses in `/packages/PACKAGE_NAME`.
