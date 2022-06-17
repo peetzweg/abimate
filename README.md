@@ -47,6 +47,12 @@ Requirements:
 
 Commands to run a build:
 
+`git clone git@github.com:peetzweg/abimate.git`
+
+`cd abimate`
+
+`git submodule update --init --recursive`
+
 `npm install`
 
 `nx build solmate`
