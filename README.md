@@ -1,4 +1,4 @@
-# abimate
+# `@abimate`
 
 ABIs and Typescript types of your favorite smartcontracts.
 
@@ -13,10 +13,13 @@ This repository is setup as a monorepo using [nx](https://nx.dev/) and will prob
 Currently included is:
 
 - [solmate](https://github.com/Rari-Capital/solmate) as [@abimate/solmate](https://www.npmjs.com/package/@abimate/solmate)
+- [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts) as [@abimate/openzeppelin](https://www.npmjs.com/package/@abimate/openzeppelin)
 
 ## Install
 
 `npm install @abimate/solmate`
+
+`npm install @abimate/openzeppelin`
 
 ## Usage
 
@@ -52,8 +55,10 @@ Commands to run a build:
 
 Code in this repository is directly referencing:
 
+- [TypeChain](https://github.com/dethcrypto/TypeChain)
 - [solmate](https://github.com/Rari-Capital/solmate)
+- [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts)
 
 ## Licensing
 
-Licensing of the original source code applies. See individual licenses in `/packages/PACKAGE_NAME`.
+Licensing of the original source code applies. See individual licenses in `/packages/{PACKAGE_NAME}/LICENSE`.

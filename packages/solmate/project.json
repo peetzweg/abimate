@@ -40,7 +40,7 @@
         "cwd": "packages/solmate",
         "commands": [
           {
-            "command": "typechain --target=ethers-v5 'lib/out/*/**.json'"
+            "command": "typechain --target=ethers-v5 'lib/out/**/*.json'"
           }
         ]
       },
@@ -61,10 +61,6 @@
         "assets": ["packages/solmate/*.md", "packages/solmate/LICENSE"]
       },
       "dependsOn": [
-        {
-          "projects": "self",
-          "target": "build-forge"
-        },
         {
           "projects": "self",
           "target": "build-typechain"

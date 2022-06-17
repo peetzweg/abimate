@@ -22,7 +22,7 @@
         "cwd": "packages/openzeppelin",
         "commands": [
           {
-            "command": "typechain --target=ethers-v5 'lib/artifacts/contracts/*/**.json'"
+            "command": "typechain --target=ethers-v5 './lib/artifacts/contracts/**/*[!dbg].json' --show-stack-traces"
           }
         ]
       },
@@ -40,10 +40,15 @@
         "outputPath": "dist/packages/openzeppelin",
         "main": "packages/openzeppelin/src/index.ts",
         "tsConfig": "packages/openzeppelin/tsconfig.lib.json",
-        "assets": ["packages/openzeppelin/*.md"]
-      }
+        "assets": ["packages/openzeppelin/*.md", "packages/openzeppelin/LICENSE"]
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build-typechain"
+        }
+      ]
     },
-
     "publish": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
@@ -61,14 +66,6 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/openzeppelin/**/*.ts"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/openzeppelin"],
-      "options": {
-        "jestConfig": "packages/openzeppelin/jest.config.ts",
-        "passWithNoTests": true
       }
     }
   },
