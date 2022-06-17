@@ -58,7 +58,7 @@
         "outputPath": "dist/packages/solmate",
         "main": "packages/solmate/src/index.ts",
         "tsConfig": "packages/solmate/tsconfig.lib.json",
-        "assets": ["packages/solmate/*.md"]
+        "assets": ["packages/solmate/*.md", "packages/solmate/LICENSE"]
       },
       "dependsOn": [
         {
