@@ -22,7 +22,7 @@
         "cwd": "packages/solmate/lib",
         "commands": [
           {
-            "command": "forge install"
+            "command": "forge build"
           }
         ]
       },
@@ -33,7 +33,7 @@
         }
       ]
     },
-    "build-typescript": {
+    "build-typechain": {
       "executor": "nx:run-commands",
       "outputs": ["packages/solmate/types"],
       "options": {
@@ -67,7 +67,7 @@
         },
         {
           "projects": "self",
-          "target": "build-typescript"
+          "target": "build-typechain"
         }
       ]
     },
