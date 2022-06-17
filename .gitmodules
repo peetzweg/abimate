@@ -1,3 +1,6 @@
 [submodule "packages/solmate/lib"]
 	path = packages/solmate/lib
 	url = git@github.com:Rari-Capital/solmate.git
+[submodule "packages/openzeppelin/lib"]
+	path = packages/openzeppelin/lib
+	url = git@github.com:OpenZeppelin/openzeppelin-contracts.git

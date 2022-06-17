@@ -1,0 +1,73 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/openzeppelin/src",
+  "projectType": "library",
+  "targets": {
+    "build-hardhat": {
+      "executor": "nx:run-commands",
+      "outputs": ["packages/openzeppelin/lib/artifacts"],
+      "options": {
+        "cwd": "packages/openzeppelin/lib",
+        "commands": [
+          {
+            "command": "hardhat compile"
+          }
+        ]
+      }
+    },
+    "build-typechain": {
+      "executor": "nx:run-commands",
+      "outputs": ["packages/openzeppelin/types"],
+      "options": {
+        "cwd": "packages/openzeppelin",
+        "commands": [
+          {
+            "command": "typechain --target=ethers-v5 './lib/artifacts/contracts/**/*[!dbg].json' --show-stack-traces"
+          }
+        ]
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build-hardhat"
+        }
+      ]
+    },
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/openzeppelin",
+        "main": "packages/openzeppelin/src/index.ts",
+        "tsConfig": "packages/openzeppelin/tsconfig.lib.json",
+        "assets": ["packages/openzeppelin/*.md", "packages/openzeppelin/LICENSE"]
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build-typechain"
+        }
+      ]
+    },
+    "publish": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.mjs openzeppelin {args.ver} {args.tag}"
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build"
+        }
+      ]
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/openzeppelin/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}
