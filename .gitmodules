@@ -4,3 +4,6 @@
 [submodule "packages/openzeppelin/lib"]
 	path = packages/openzeppelin/lib
 	url = git@github.com:OpenZeppelin/openzeppelin-contracts.git
+[submodule "packages/compound/lib"]
+	path = packages/compound/lib
+	url = git@github.com:compound-finance/compound-protocol.git

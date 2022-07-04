@@ -1,0 +1,60 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/compound/src",
+  "projectType": "library",
+  "targets": {
+    "install": {
+      "executor": "nx:run-commands",
+      "outputs": ["packages/compound/lib/node_modules"],
+      "options": {
+        "cwd": "packages/compound/lib",
+        "commands": [
+          {
+            "command": "rm yarn.lock"
+          },
+          {
+            "command": "yarn"
+          }
+        ]
+      }
+    },
+    "build-saddle": {
+      "executor": "nx:run-commands",
+      "outputs": ["packages/compound/lib/fixme"],
+      "options": {
+        "cwd": "packages/compound/lib",
+        "commands": [
+          {
+            "command": "yarn run compile"
+          }
+        ]
+      }
+    },
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/compound",
+        "main": "packages/compound/src/index.ts",
+        "tsConfig": "packages/compound/tsconfig.lib.json",
+        "assets": ["packages/compound/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/compound/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/compound"],
+      "options": {
+        "jestConfig": "packages/compound/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

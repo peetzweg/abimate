@@ -57,6 +57,17 @@ Commands to run a build:
 
 `nx build solmate`
 
+
+## Contribute
+
+Generate new package:
+
+`nx generate @nrwl/js:library --name=PACKAGE_NAME --buildable`
+
+Add contract code via submodule:
+
+`git submodule add <remote_url> packages/PACKAGE_NAME/lib`
+
 ## Acknowledgements
 
 Code in this repository is directly referencing:
