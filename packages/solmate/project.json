@@ -2,6 +2,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/solmate/src",
   "projectType": "library",
+  "implicitDependencies": ["chop"],
   "targets": {
     "install": {
       "executor": "nx:run-commands",
@@ -48,6 +49,24 @@
         {
           "projects": "self",
           "target": "build-forge"
+        }
+      ]
+    },
+    "build-abis": {
+      "executor": "nx:run-commands",
+      "outputs": ["packages/solmate/types"],
+      "options": {
+        "cwd": "packages/solmate",
+        "commands": [
+          {
+            "command": "node ../../dist/apps/chop/main.js ./abi ./lib/out/*/*.json"
+          }
+        ]
+      },
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build"
         }
       ]
     },
