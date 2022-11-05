@@ -25,16 +25,36 @@ Currently included is:
 
 Here is an example usage of the ABI and ERC721 contract type.
 
-```typescript
-import { ERC721, ERC721ABI } from '@abimate/solmate';
-import { ethers } from 'ethers';
+### Usage with `@wagmi`
 
-const collection = new ethers.Contract(
-    '0x23581767a106ae21c074b2276d25e5c3e136a68b',
-    ERC721ABI,
-    provider
-  ) as ERC721;
-const name = await collection.callStatic.name();
+```typescript
+import { balanceOf } from '@abimate/solmate/ERC20';
+import { getContract } from '@wagmi/core';
+
+const ERC20 = [balanceOf];
+
+const token = getContract({
+  address: '0x23581767a106ae21c074b2276D25e5C3e136a68b',
+  abi: ERC20,
+});
+
+const balance = await token.callStatic.balanceOf('0x23581767a106ae21c074b2276D25e5C3e136a68b');
+```
+
+### Usage with `ethers`
+
+```typescript
+import { Contract } from 'ethers';
+import ABI from '@abimate/solmate/ERC20';
+import { ERC20 } from '@abimate/solmate/types/ERC20';
+
+const token = new Contract(
+  '0x23581767a106ae21c074b2276D25e5C3e136a68b',
+  ABI
+) as ERC20;
+
+token.functions.balanceOf('0x23581767a106ae21c074b2276D25e5C3e136a68b');
+
 ```
 
 ## Building
