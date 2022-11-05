@@ -46,8 +46,12 @@ function createFragmentDeclaration(
     identifier,
     undefined,
     undefined,
-    createObjectFromObject(fragment)
+    ts.factory.createAsExpression(
+      createObjectFromObject(fragment),
+      ts.factory.createKeywordTypeNode(ts.SyntaxKind.ConstKeyword as any)
+    )
   );
+
   return [identifier, expression];
 }
 
@@ -59,10 +63,15 @@ function createContractFileForAbi(abi: object[]) {
     return declaration;
   });
 
+  if (fragmentDeclarationIdentifiers.length === 0) return [];
+
   const exportDefault = ts.factory.createExportAssignment(
     [ts.factory.createToken(ts.SyntaxKind.DefaultKeyword)],
     false,
-    ts.factory.createArrayLiteralExpression(fragmentDeclarationIdentifiers)
+    ts.factory.createAsExpression(
+      ts.factory.createArrayLiteralExpression(fragmentDeclarationIdentifiers),
+      ts.factory.createKeywordTypeNode(ts.SyntaxKind.ConstKeyword as any)
+    )
   );
 
   return [...fragmentDeclarations, exportDefault];
@@ -84,6 +93,10 @@ function convert(
       if (!data['abi']) continue;
 
       const lineNodes = createContractFileForAbi(data['abi']);
+      if (lineNodes.length === 0) {
+        console.error('Empty:', filePath);
+        continue;
+      }
 
       const resultFile = ts.createSourceFile(
         'someFileName.ts',
@@ -99,12 +112,14 @@ function convert(
 
       fs.writeFileSync(`${outputPath}/${fileName}.ts`, lineStrings.join('\n'));
     } catch (exception) {
-      console.error(filePath, exception);
+      console.error('Unable to convert:', filePath);
     }
   }
 }
-
-convert(process.argv[2], process.argv.slice(3), {
-  esModuleInterop: true,
-  resolveJsonModule: true,
-});
+if (process.argv.length > 2) {
+  convert(process.argv[2], process.argv.slice(3), {
+    esModuleInterop: true,
+    resolveJsonModule: true,
+  });
+}
+console.log('testing');

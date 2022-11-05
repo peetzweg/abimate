@@ -15,6 +15,25 @@
         ]
       }
     },
+    "copy-contracts": {
+      "executor": "nx:run-commands",
+      "outputs": ["packages/openzeppelin/tmp"],
+      "options": {
+        "cwd": "packages/openzeppelin",
+        "commands": [
+          { "command": "rm -rf ./tmp && mkdir ./tmp" },
+          {
+            "command": "for file in $(find  ./lib/artifacts/contracts/ -name '*.json' | grep -v -e 'dbg' -e 'Mock' -e 'IGovernor' -e 'ERC721' -e 'ERC1363'); do cp $file ./tmp; done"
+          }
+        ]
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build-hard"
+        }
+      ]
+    },
     "build-typechain": {
       "executor": "nx:run-commands",
       "outputs": ["packages/openzeppelin/types"],
@@ -22,14 +41,40 @@
         "cwd": "packages/openzeppelin",
         "commands": [
           {
-            "command": "typechain --target=ethers-v5 './lib/artifacts/contracts/**/*[!dbg].json' --show-stack-traces"
+            "command": "typechain --target=ethers-v5 'tmp/*.json' --out-dir ./types"
           }
         ]
       },
       "dependsOn": [
         {
           "projects": "self",
+          "target": "copy-contracts"
+        },
+        {
+          "projects": "self",
           "target": "build-hardhat"
+        }
+      ]
+    },
+    "build-abis": {
+      "executor": "nx:run-commands",
+      "outputs": ["packages/openzeppelin/*.ts"],
+      "options": {
+        "cwd": "packages/openzeppelin",
+        "commands": [
+          {
+            "command": "node ../../dist/apps/chop/main.js ./ ./tmp/*.json"
+          }
+        ]
+      },
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build"
+        },
+        {
+          "projects": "self",
+          "target": "copy-contracts"
         }
       ]
     },
@@ -40,17 +85,24 @@
         "outputPath": "dist/packages/openzeppelin",
         "main": "packages/openzeppelin/src/index.ts",
         "tsConfig": "packages/openzeppelin/tsconfig.lib.json",
-        "assets": ["packages/openzeppelin/*.md", "packages/openzeppelin/LICENSE"]
+        "assets": [
+          "packages/openzeppelin/*.md",
+          "packages/openzeppelin/LICENSE"
+        ]
       },
       "dependsOn": [
         {
           "projects": "self",
           "target": "build-typechain"
+        },
+        {
+          "projects": "self",
+          "target": "build-abis"
         }
       ]
     },
     "publish": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "command": "node tools/scripts/publish.mjs openzeppelin {args.ver} {args.tag}"
       },

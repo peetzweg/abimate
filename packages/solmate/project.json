@@ -34,14 +34,15 @@
         }
       ]
     },
-    "build-typechain": {
+    "copy-contracts": {
       "executor": "nx:run-commands",
-      "outputs": ["packages/solmate/types"],
+      "outputs": ["packages/solmate/tmp"],
       "options": {
         "cwd": "packages/solmate",
         "commands": [
+          { "command": "rm -rf ./tmp && mkdir ./tmp" },
           {
-            "command": "typechain --target=ethers-v5 'lib/out/**/*.json'"
+            "command": "for file in $(find  ./lib/out -name '*.json' | grep -v -e 'Mock' -e 'DSTest' -e 'Test' -e 'Hevm' -e 'ERC721'); do cp $file ./tmp; done"
           }
         ]
       },
@@ -52,14 +53,36 @@
         }
       ]
     },
-    "build-abis": {
+    "build-typechain": {
       "executor": "nx:run-commands",
       "outputs": ["packages/solmate/types"],
       "options": {
         "cwd": "packages/solmate",
         "commands": [
           {
-            "command": "node ../../dist/apps/chop/main.js ./abi ./lib/out/*/*.json"
+            "command": "typechain --target=ethers-v5 'tmp/*.json' --out-dir ./types"
+          }
+        ]
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "copy-contracts"
+        },
+        {
+          "projects": "self",
+          "target": "build-forge"
+        }
+      ]
+    },
+    "build-abis": {
+      "executor": "nx:run-commands",
+      "outputs": ["packages/solmate/abi"],
+      "options": {
+        "cwd": "packages/solmate",
+        "commands": [
+          {
+            "command": "node ../../dist/apps/chop/main.js ./ ./tmp/*.json"
           }
         ]
       },
@@ -67,6 +90,10 @@
         {
           "projects": "dependencies",
           "target": "build"
+        },
+        {
+          "projects": "self",
+          "target": "copy-contracts"
         }
       ]
     },
@@ -83,11 +110,15 @@
         {
           "projects": "self",
           "target": "build-typechain"
+        },
+        {
+          "projects": "self",
+          "target": "build-abis"
         }
       ]
     },
     "publish": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "command": "node tools/scripts/publish.mjs solmate {args.ver} {args.tag}"
       },
