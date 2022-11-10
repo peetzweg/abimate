@@ -2,7 +2,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/solmate/src",
   "projectType": "library",
-  "implicitDependencies": ["chop"],
+  "implicitDependencies": ["core"],
   "targets": {
     "install": {
       "executor": "nx:run-commands",
@@ -82,7 +82,7 @@
         "cwd": "packages/solmate",
         "commands": [
           {
-            "command": "node ../../dist/apps/chop/main.js ./src ./tmp/*.json"
+            "command": "node ../../dist/apps/core/main.js ./src ./tmp/*.json"
           }
         ]
       },

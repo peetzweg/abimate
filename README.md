@@ -57,6 +57,12 @@ token.functions.balanceOf('0x23581767a106ae21c074b2276D25e5C3e136a68b');
 
 ```
 
+## Use with Own Contracts `@abimate/core`
+
+`npm install @abimate/core`
+
+`abimate [output_path] [input_files]`
+
 ## Building
 
 Requirements:

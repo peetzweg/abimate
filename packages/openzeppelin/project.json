@@ -63,7 +63,7 @@
         "cwd": "packages/openzeppelin",
         "commands": [
           {
-            "command": "node ../../dist/apps/chop/main.js ./src ./tmp/*.json"
+            "command": "node ../../dist/apps/core/main.js ./src ./tmp/*.json"
           }
         ]
       },

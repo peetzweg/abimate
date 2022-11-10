@@ -1,0 +1,10 @@
+{
+  "name": "@abimate/core",
+  "version": "0.1.0",
+  "bin":{
+    "abimate":"./main.js"
+  },
+  "type": "commonjs",
+  "homepage": "https://github.com/peetzweg/abimate"
+}
+

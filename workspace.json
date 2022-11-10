@@ -2,7 +2,7 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "chop": "apps/chop",
+    "core": "apps/core",
     "openzeppelin": "packages/openzeppelin",
     "solmate": "packages/solmate"
   }
