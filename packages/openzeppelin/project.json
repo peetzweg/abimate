@@ -41,7 +41,7 @@
         "cwd": "packages/openzeppelin",
         "commands": [
           {
-            "command": "typechain --target=ethers-v5 'tmp/*.json' --out-dir ./types"
+            "command": "typechain --target=ethers-v5 'tmp/*.json' --out-dir ./src/types"
           }
         ]
       },
@@ -63,7 +63,7 @@
         "cwd": "packages/openzeppelin",
         "commands": [
           {
-            "command": "node ../../dist/apps/chop/main.js ./ ./tmp/*.json"
+            "command": "node ../../dist/apps/chop/main.js ./src ./tmp/*.json"
           }
         ]
       },
@@ -84,6 +84,7 @@
       "options": {
         "outputPath": "dist/packages/openzeppelin",
         "main": "packages/openzeppelin/src/index.ts",
+        "rootDir": "packages/openzeppelin/src",
         "tsConfig": "packages/openzeppelin/tsconfig.lib.json",
         "assets": [
           "packages/openzeppelin/*.md",

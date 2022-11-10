@@ -55,12 +55,12 @@
     },
     "build-typechain": {
       "executor": "nx:run-commands",
-      "outputs": ["packages/solmate/types"],
+      "outputs": ["packages/solmate/src/types"],
       "options": {
         "cwd": "packages/solmate",
         "commands": [
           {
-            "command": "typechain --target=ethers-v5 'tmp/*.json' --out-dir ./types"
+            "command": "typechain --target=ethers-v5 'tmp/*.json' --out-dir ./src/types"
           }
         ]
       },
@@ -77,12 +77,12 @@
     },
     "build-abis": {
       "executor": "nx:run-commands",
-      "outputs": ["packages/solmate/abi"],
+      "outputs": ["packages/solmate/src/*.ts"],
       "options": {
         "cwd": "packages/solmate",
         "commands": [
           {
-            "command": "node ../../dist/apps/chop/main.js ./ ./tmp/*.json"
+            "command": "node ../../dist/apps/chop/main.js ./src ./tmp/*.json"
           }
         ]
       },
@@ -103,6 +103,7 @@
       "options": {
         "outputPath": "dist/packages/solmate",
         "main": "packages/solmate/src/index.ts",
+        "rootDir": "packages/solmate/src",
         "tsConfig": "packages/solmate/tsconfig.lib.json",
         "assets": ["packages/solmate/*.md", "packages/solmate/LICENSE"]
       },
