@@ -106,11 +106,14 @@ function convert(
         ts.ScriptKind.TS
       );
 
-      const lineStrings = lineNodes.map((node) =>
-        printer.printNode(ts.EmitHint.Unspecified, node, resultFile)
+      const file = ts.createSourceFile(
+        `${outputPath}/${fileName}.ts`,
+        '',
+        ts.ScriptTarget.ESNext,
+        false,
+        ts.ScriptKind.TS
       );
-
-      fs.writeFileSync(`${outputPath}/${fileName}.ts`, lineStrings.join('\n'));
+      printer.printFile(file);
     } catch (exception) {
       console.error('Unable to convert:', filePath);
     }
