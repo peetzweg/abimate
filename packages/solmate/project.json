@@ -34,15 +34,15 @@
         }
       ]
     },
-    "copy-contracts": {
+    "copy-artifacts": {
       "executor": "nx:run-commands",
-      "outputs": ["packages/solmate/tmp"],
+      "outputs": ["packages/solmate/artifacts"],
       "options": {
         "cwd": "packages/solmate",
         "commands": [
-          { "command": "rm -rf ./tmp && mkdir ./tmp" },
+          { "command": "rm -rf ./artifacts && mkdir ./artifacts" },
           {
-            "command": "for file in $(find  ./lib/out -name '*.json' | grep -v -e 'Mock' -e 'DSTest' -e 'Test' -e 'Hevm' -e 'ERC721'); do cp $file ./tmp; done"
+            "command": "for file in $(find  ./lib/out -name '*.json' | grep -v -e 'Mock' -e 'DSTest' -e 'Test' -e 'Hevm'); do cp $file ./artifacts; done"
           }
         ]
       },
@@ -60,14 +60,14 @@
         "cwd": "packages/solmate",
         "commands": [
           {
-            "command": "typechain --target=ethers-v5 'tmp/*.json' --out-dir ./src/types"
+            "command": "typechain --target=ethers-v5 './artifacts/*.json' --out-dir ./src/types"
           }
         ]
       },
       "dependsOn": [
         {
           "projects": "self",
-          "target": "copy-contracts"
+          "target": "copy-artifacts"
         },
         {
           "projects": "self",
@@ -82,7 +82,7 @@
         "cwd": "packages/solmate",
         "commands": [
           {
-            "command": "node ../../dist/apps/core/main.js ./src ./tmp/*.json"
+            "command": "node ../../dist/apps/core/main.js ./src ./artifacts/*.json"
           }
         ]
       },
@@ -93,7 +93,7 @@
         },
         {
           "projects": "self",
-          "target": "copy-contracts"
+          "target": "copy-artifacts"
         }
       ]
     },

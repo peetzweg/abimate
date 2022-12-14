@@ -2,6 +2,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/openzeppelin/src",
   "projectType": "library",
+  "implicitDependencies": ["core"],
   "targets": {
     "build-hardhat": {
       "executor": "nx:run-commands",
@@ -15,15 +16,15 @@
         ]
       }
     },
-    "copy-contracts": {
+    "copy-artifacts": {
       "executor": "nx:run-commands",
-      "outputs": ["packages/openzeppelin/tmp"],
+      "outputs": ["packages/openzeppelin/artifacts"],
       "options": {
         "cwd": "packages/openzeppelin",
         "commands": [
-          { "command": "rm -rf ./tmp && mkdir ./tmp" },
+          { "command": "rm -rf ./artifacts && mkdir ./artifacts" },
           {
-            "command": "for file in $(find  ./lib/artifacts/contracts/ -name '*.json' | grep -v -e 'dbg' -e 'Mock' -e 'IGovernor' -e 'ERC721' -e 'ERC1363'); do cp $file ./tmp; done"
+            "command": "for file in $(find  ./lib/artifacts/contracts/ -name '*.json' | grep -v -e 'dbg' -e 'Mock'); do cp $file ./artifacts; done"
           }
         ]
       },
@@ -41,14 +42,14 @@
         "cwd": "packages/openzeppelin",
         "commands": [
           {
-            "command": "typechain --target=ethers-v5 'tmp/*.json' --out-dir ./src/types"
+            "command": "typechain --target=ethers-v5 './artifacts/*.json' --out-dir ./src/types"
           }
         ]
       },
       "dependsOn": [
         {
           "projects": "self",
-          "target": "copy-contracts"
+          "target": "copy-artifacts"
         },
         {
           "projects": "self",
@@ -63,7 +64,7 @@
         "cwd": "packages/openzeppelin",
         "commands": [
           {
-            "command": "node ../../dist/apps/core/main.js ./src ./tmp/*.json"
+            "command": "node ../../dist/apps/core/main.js ./src ./artifacts/*.json"
           }
         ]
       },
@@ -74,7 +75,7 @@
         },
         {
           "projects": "self",
-          "target": "copy-contracts"
+          "target": "copy-artifacts"
         }
       ]
     },
